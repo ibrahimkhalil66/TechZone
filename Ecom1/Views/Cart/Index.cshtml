@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Ecom1.Models.CartItem>
+
+@{
+    ViewData["Title"] = "Cart";
+    decimal total = 0;
+}
+
+<h1 class="mb-4">Shopping Cart</h1>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        Your cart is empty.
+    </div>
+}
+else
+{
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var itemTotal = (item.Product?.PriceProduct ?? 0) * item.Quantity;
+                total += itemTotal;
+
+                <tr>
+                    <td>
+                        <img src="@item.Product?.ImageUrl"
+                             style="width:80px; height:80px; object-fit:cover;"
+                             class="rounded" />
+                    </td>
+
+                    <td>@item.Product?.NameProduct</td>
+
+                    <td>@item.Product?.PriceProduct DA</td>
+
+                    <td>@item.Quantity</td>
+
+                    <td>@itemTotal DA</td>
+
+                    <td>
+                        <a asp-controller="Cart"
+                               asp-action="Remove"
+                               asp-route-id="@item.Id"
+                               class="btn btn-danger btn-sm">
+                            Remove
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="text-end">
+        <h3>Total: @total DA</h3>
+
+        <a asp-controller="Orders"
+               asp-action="Checkout"
+               class="btn btn-primary">
+            Checkout
+        </a>
+    </div>
+}

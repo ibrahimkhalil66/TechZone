@@ -1,0 +1,75 @@
+﻿@model Ecom1.Models.Product
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<div class="container mt-5">
+
+    <div class="card shadow border-0">
+        <div class="row g-0">
+
+            <!-- Product Image -->
+            <div class="col-md-5">
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <img src="@Model.ImageUrl"
+                         class="img-fluid rounded-start w-100"
+                         style="height:500px; object-fit:cover;"
+                         alt="@Model.NameProduct" />
+                }
+                else
+                {
+                    <div class="bg-light d-flex align-items-center justify-content-center"
+                         style="height:500px;">
+                        <span class="text-muted">No Image</span>
+                    </div>
+                }
+            </div>
+
+            <!-- Product Info -->
+            <div class="col-md-7">
+                <div class="card-body p-5">
+
+                    <h1 class="fw-bold mb-3">
+                        @Model.NameProduct
+                    </h1>
+
+                    <h2 class="text-primary fw-bold mb-4">
+                        @Model.PriceProduct DA
+                    </h2>
+
+                    <p class="text-muted fs-5">
+                        @Model.Description
+                    </p>
+
+                    <hr />
+
+                    <p class="mb-4">
+                        <strong>Available Quantity:</strong>
+                        @Model.Quantity
+                    </p>
+
+                    <div class="d-flex gap-3">
+                        <a asp-controller="Cart"
+                               asp-action="AddToCart"
+                               asp-route-id="@Model.IdProduct"
+                               class="btn btn-success btn-sm">
+                            Add To Cart
+                        </a>
+                       
+
+                        <a asp-action="Index"
+                               class="btn btn-outline-dark px-4">
+                            Back
+                        </a>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

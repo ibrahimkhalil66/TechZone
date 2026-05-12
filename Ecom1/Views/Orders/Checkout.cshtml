@@ -1,0 +1,32 @@
+﻿@model Ecom1.Models.Order
+
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+<h1 class="mb-4">Checkout</h1>
+
+<form asp-action="Checkout" method="post" class="col-md-6">
+    <div class="mb-3">
+        <label asp-for="FullName" class="form-label">Full Name</label>
+        <input asp-for="FullName" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Phone" class="form-label">Phone</label>
+        <input asp-for="Phone" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Address" class="form-label">Address</label>
+        <textarea asp-for="Address" class="form-control" rows="3" required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Place Order
+    </button>
+
+    <a asp-controller="Cart" asp-action="Index" class="btn btn-outline-dark">
+        Back to Cart
+    </a>
+</form>

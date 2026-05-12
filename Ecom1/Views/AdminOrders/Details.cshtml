@@ -1,0 +1,71 @@
+﻿@model Ecom1.Models.Order
+
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<h1 class="mb-4">Order Details</h1>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h5>Customer Information</h5>
+
+        <p><strong>Full Name:</strong> @Model.FullName</p>
+        <p><strong>Phone:</strong> @Model.Phone</p>
+        <p><strong>Address:</strong> @Model.Address</p>
+        <p><strong>Date:</strong> @Model.CreatedAt.ToString("yyyy-MM-dd HH:mm")</p>
+        <p><strong>Total:</strong> @Model.TotalPrice DA</p>
+        <p><strong>Status:</strong> @Model.Status</p>
+
+        <form asp-action="UpdateStatus" method="post" class="d-flex gap-2">
+            <input type="hidden" name="id" value="@Model.Id" />
+
+            <select name="status" class="form-select w-auto">
+                <option value="Pending">Pending</option>
+                <option value="Processing">Processing</option>
+                <option value="Delivered">Delivered</option>
+                <option value="Cancelled">Cancelled</option>
+            </select>
+
+            <button type="submit" class="btn btn-primary">
+                Update
+            </button>
+        </form>
+    </div>
+</div>
+
+<h4>Products</h4>
+
+<table class="table table-bordered align-middle">
+    <thead class="table-dark">
+        <tr>
+            <th>Image</th>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model.OrderItems!)
+        {
+            <tr>
+                <td>
+                    <img src="@item.Product?.ImageUrl"
+                         style="width:70px; height:70px; object-fit:cover;"
+                         class="rounded" />
+                </td>
+
+                <td>@item.Product?.NameProduct</td>
+                <td>@item.Price DA</td>
+                <td>@item.Quantity</td>
+                <td>@(item.Price * item.Quantity) DA</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Index" class="btn btn-outline-dark">
+    Back to Orders
+</a>

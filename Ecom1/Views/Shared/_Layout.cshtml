@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Ecom1</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Ecom1.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm mb-3">
+            <div class="container-fluid px-4">
+
+                <!-- Left: Logo -->
+                <a class="navbar-brand d-flex align-items-center"
+                       asp-controller="Home"
+                       asp-action="Index">
+                    <img src="~/images/Assets/logo.png"
+                         alt="TechZone Logo"
+                         style="height:55px; width:auto;" />
+                </a>
+
+                <button class="navbar-toggler" type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#mainNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="mainNavbar">
+
+                    <!-- Center: Main Links -->
+                    <ul class="navbar-nav mx-auto gap-lg-3">
+                        <li class="nav-item">
+                            <a class="nav-link fw-semibold text-dark"
+                                   asp-controller="Home"
+                                   asp-action="Index">
+                                Home
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link fw-semibold text-dark"
+                                   asp-controller="Products"
+                                   asp-action="Index">
+                                Products
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link fw-semibold text-dark"
+                                   asp-controller="Home"
+                                   asp-action="Privacy">
+                                Privacy
+                            </a>
+                        </li>
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link fw-semibold text-primary"
+                                       asp-controller="AdminProducts"
+                                       asp-action="Index">
+                                    Manage Products
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link fw-semibold text-primary"
+                                       asp-controller="AdminOrders"
+                                       asp-action="Index">
+                                    Orders
+                                </a>
+                            </li>
+                        }
+                    </ul>
+
+                    <!-- Right: Cart + Account -->
+                    <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+
+                        @if (!User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="btn btn-outline-dark rounded-pill px-3"
+                                       asp-controller="Cart"
+                                       asp-action="Index">
+                                    🛒 Cart
+                                </a>
+                            </li>
+                        }
+
+                        @if (User.Identity != null && User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <span class="nav-link text-dark fw-semibold">
+                                    Admin Account
+                                </span>
+                            </li>
+
+                            <li class="nav-item">
+                                <form asp-area="Identity"
+                                      asp-page="/Account/Logout"
+                                      asp-route-returnUrl="/"
+                                      method="post"
+                                      class="d-inline">
+                                    <button type="submit" class="nav-link btn btn-link text-dark">
+                                        Logout
+                                    </button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="btn btn-outline-primary rounded-pill px-3"
+                                       asp-area="Identity"
+                                       asp-page="/Account/Login">
+                                    Login
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="btn btn-primary rounded-pill px-3"
+                                       asp-area="Identity"
+                                       asp-page="/Account/Register">
+                                    Register
+                                </a>
+                            </li>
+                        }
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2026 - TechZone 
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
